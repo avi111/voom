@@ -1,31 +1,31 @@
 export interface NewsArticle {
-  id?: number;
-  title: string;
-  description: string | null;
-  url: string;
-  urlToImage: string | null;
-  publishedAt: string;
-  author: string | null;
+  id?: number
+  title: string
+  description: string | null
+  url: string
+  urlToImage: string | null
+  publishedAt: string
+  author: string | null
   source: {
-    id: string | null;
+    id: string | null
     name: string
-  };
-  content: string | null;
+  }
+  content: string | null
 }
 
 export interface NewsArticleDB {
-  id?: number;
-  title: string;
-  description: string | null;
-  url: string;
-  urlToImage: string | null;
-  publishedAt: string;
-  author: string | null;
-  source: string;
-  content: string | null;
+  id?: number
+  title: string
+  description: string | null
+  url: string
+  urlToImage: string | null
+  publishedAt: string
+  author: string | null
+  source: string
+  content: string | null
 }
 
 export interface NewsResponse {
-  articles: NewsArticle[];
-  totalResults: number;
+  articles: NewsArticle[]
+  totalResults: number
 }

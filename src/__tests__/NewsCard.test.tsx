@@ -1,5 +1,5 @@
-import { render, screen } from '@testing-library/react';
-import { NewsCard } from '../components/NewsCard';
+import { render, screen } from '@testing-library/react'
+import { NewsCard } from '../components/NewsCard'
 
 describe('NewsCard', () => {
   const mockArticle = {
@@ -10,21 +10,21 @@ describe('NewsCard', () => {
     publishedAt: '2024-03-10T12:00:00Z',
     author: 'John Doe',
     source: 'Test Source',
-    content: 'Test content'
-  };
+    content: 'Test content',
+  }
 
   it('renders article title', () => {
-    render(<NewsCard article={mockArticle} />);
-    expect(screen.getByText('Test Drone News')).toBeDefined();
-  });
+    render(<NewsCard article={mockArticle} />)
+    expect(screen.getByText('Test Drone News')).toBeDefined()
+  })
 
   it('renders article description', () => {
-    render(<NewsCard article={mockArticle} />);
-    expect(screen.getByText('This is a test description')).toBeDefined();
-  });
+    render(<NewsCard article={mockArticle} />)
+    expect(screen.getByText('This is a test description')).toBeDefined()
+  })
 
   it('renders author name when provided', () => {
-    render(<NewsCard article={mockArticle} />);
-    expect(screen.getByText('John Doe')).toBeDefined();
-  });
-});
+    render(<NewsCard article={mockArticle} />)
+    expect(screen.getByText('John Doe')).toBeDefined()
+  })
+})

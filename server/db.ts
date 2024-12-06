@@ -1,12 +1,12 @@
-import sqlite3 from 'sqlite3';
-import { promisify } from 'util';
-import { NewsArticle } from './types';
+import sqlite3 from 'sqlite3'
+import { promisify } from 'util'
+import { NewsArticle } from './types'
 
-const db = new sqlite3.Database('news.db');
+const db = new sqlite3.Database('news.db')
 
 // Promisify database operations
-const runAsync = promisify(db.run.bind(db));
-const allAsync = promisify(db.all.bind(db));
+const runAsync = promisify(db.run.bind(db))
+const allAsync = promisify(db.all.bind(db))
 
 // Create tables
 db.serialize(() => {
@@ -22,15 +22,15 @@ db.serialize(() => {
       source TEXT NOT NULL,
       content TEXT
     )
-  `);
-});
+  `)
+})
 
 export const insertArticle = async (article: NewsArticle) => {
   const stmt = `
     INSERT OR REPLACE INTO articles (title, description, url, urlToImage, publishedAt, author, source, content)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-  `;
-  
+  `
+
   try {
     await runAsync(stmt, [
       article.title,
@@ -40,33 +40,44 @@ export const insertArticle = async (article: NewsArticle) => {
       article.publishedAt,
       article.author,
       article.source.name,
-      article.content
-    ]);
+      article.content,
+    ])
   } catch (error) {
-    console.error('Error inserting article:', error);
-    throw error;
+    console.error('Error inserting article:', error)
+    throw error
   }
-};
+}
 
 export const getArticles = async (searchTerm?: string) => {
   try {
-    let query = 'SELECT * FROM articles ORDER BY publishedAt DESC LIMIT 50';
-    let params: any[] = [];
+    let query = 'SELECT * FROM articles ORDER BY publishedAt DESC LIMIT 50'
+    let params: any[] = []
 
     if (searchTerm) {
       query = `
         SELECT * FROM articles 
         WHERE title LIKE ? OR description LIKE ? OR content LIKE ?
         ORDER BY publishedAt DESC LIMIT 50
-      `;
-      params = [`%${searchTerm}%`, `%${searchTerm}%`, `%${searchTerm}%`];
+      `
+      params = [`%${searchTerm}%`, `%${searchTerm}%`, `%${searchTerm}%`]
     }
 
-    return await allAsync(query, params);
+    return await allAsync(query, params)
   } catch (error) {
-    console.error('Error getting articles:', error);
-    throw error;
+    console.error('Error getting articles:', error)
+    throw error
   }
-};
+}
 
-export default db;
+export const getArticlesByAuthor = async (author: string) => {
+  try {
+    const query =
+      'SELECT * FROM articles WHERE author = ? ORDER BY publishedAt DESC LIMIT 50'
+    return await allAsync(query, [author])
+  } catch (error) {
+    console.error('Error getting articles by author:', error)
+    throw error
+  }
+}
+
+export default db
