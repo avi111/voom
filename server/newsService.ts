@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { NewsArticle, NewsArticleDB, NewsResponse } from './types'
+import { NewsArticleDB, NewsResponse } from './types'
 import { insertArticle } from './db'
 
 const NEWS_API_URL = 'https://newsapi.org/v2/everything'

@@ -3,6 +3,7 @@ import { NewsCard } from '../components/NewsCard.tsx'
 import { useEffect, useState } from 'react'
 import { NewsArticle } from '../types.ts'
 import { getNews } from '../api.ts'
+import Loader from '../components/Loader.tsx'
 
 const Home = () => {
   const [articles, setArticles] = useState<NewsArticle[]>([])
@@ -34,7 +35,7 @@ const Home = () => {
 
       {loading ? (
         <div className='flex justify-center items-center h-64'>
-          <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600'></div>
+          <Loader />
         </div>
       ) : (
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>

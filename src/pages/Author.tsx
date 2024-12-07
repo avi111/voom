@@ -3,11 +3,40 @@ import { useEffect, useState } from 'react'
 import { NewsArticle, WikipediaPage } from '../types.ts'
 import { getAuthorData } from '../api.ts'
 import { useSearchParams } from 'react-router-dom'
+import { AxiosError } from 'axios'
 
 const Author = () => {
   const [searchParams] = useSearchParams()
   const name = searchParams.get('name')
-  const [authorBio, setAuthorBio] = useState<WikipediaPage>({})
+  const [authorBio, setAuthorBio] = useState<WikipediaPage>({
+    content_urls: {
+      desktop: {
+        edit: '',
+        page: '',
+        revisions: '',
+        talk: '',
+      },
+      mobile: { edit: '', page: '', revisions: '', talk: '' },
+    },
+    description: '',
+    description_source: '',
+    dir: '',
+    displaytitle: '',
+    extract: '',
+    extract_html: '',
+    lang: '',
+    namespace: { id: 0, text: '' },
+    originalimage: { height: 0, source: '', width: 0 },
+    pageid: 0,
+    revision: '',
+    thumbnail: { height: 0, source: '', width: 0 },
+    tid: '',
+    timestamp: '',
+    title: '',
+    titles: { canonical: '', display: '', normalized: '' },
+    type: '',
+    wikibase_item: '',
+  })
   const [articles, setArticles] = useState<NewsArticle[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -23,7 +52,11 @@ const Author = () => {
       } catch (error) {
         console.error(
           'Error fetching news:',
-          (error as any).response.data.error.message
+          (
+            (error as AxiosError).response?.data as {
+              error: Error
+            }
+          ).error.message
         )
         setArticles([])
         setAuthorBio({
