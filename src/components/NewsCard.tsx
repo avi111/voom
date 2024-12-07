@@ -1,5 +1,5 @@
 import React from 'react'
-import { ExternalLink, User, Calendar } from 'lucide-react'
+import { Calendar, ExternalLink, User } from 'lucide-react'
 import { NewsArticle } from '../types'
 import { Link } from 'react-router-dom'
 

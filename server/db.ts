@@ -1,6 +1,6 @@
 import sqlite3 from 'sqlite3'
 import { promisify } from 'util'
-import { NewsArticle } from './types'
+import { NewsArticle, NewsArticleDB } from './types'
 
 const db = new sqlite3.Database('news.db')
 
@@ -48,10 +48,12 @@ export const insertArticle = async (article: NewsArticle) => {
   }
 }
 
-export const getArticles = async (searchTerm?: string) => {
+export const getArticles = async (
+  searchTerm?: string
+): Promise<NewsArticleDB[]> => {
   try {
     let query = 'SELECT * FROM articles ORDER BY publishedAt DESC LIMIT 50'
-    let params: any[] = []
+    let params: string[] = []
 
     if (searchTerm) {
       query = `
@@ -69,7 +71,9 @@ export const getArticles = async (searchTerm?: string) => {
   }
 }
 
-export const getArticlesByAuthor = async (author: string) => {
+export const getArticlesByAuthor = async (
+  author: string
+): Promise<NewsArticleDB[]> => {
   try {
     const query =
       'SELECT * FROM articles WHERE author = ? ORDER BY publishedAt DESC LIMIT 50'
